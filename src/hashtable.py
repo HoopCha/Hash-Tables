@@ -54,20 +54,24 @@ class HashTable:
 
         Fill this in.
         '''
-        i = self._hash_mod(key)
+        hash_key = self._hash_mod(key)
         node = LinkedPair(key,value)
-        if not self.storage[i]:
-            self.storage[i] = node
+        current = self.storage[hash_key]
+
+        if not self.storage[hash_key]:
+            self.storage[hash_key] = node
             return
-        current = self.storage[i]
+
         while current.next:
             if current.key == key:
                 current.value = value
                 return
             current = current.next
+
         if current.key == key:
                 current.value = value
                 return
+                
         current.next = node
 
 
@@ -81,17 +85,17 @@ class HashTable:
 
         Fill this in.
         '''
-        i = self._hash_mod(key)
-        if not self.storage[i]:
-            return "Nope"
-        current = self.storage[i]
-        last = self.storage[i]
+        hash_key = self._hash_mod(key)
+        if not self.storage[hash_key]:
+            return "The key is not found here!"
+        current = self.storage[hash_keyi]
+        last = self.storage[hash_key]
         while current:
             if current.key == key:
                 if current.key != last.key:
                     last.next = current.next
                 else:
-                    self.storage[i] = current.next
+                    self.storage[hash_key] = current.next
                 return
             last = current
             current = current.next
@@ -105,10 +109,10 @@ class HashTable:
 
         Fill this in.
         '''
-        i = self._hash_mod(key)
-        if not self.storage[i]:
+        hash_key = self._hash_mod(key)
+        if not self.storage[hash_key]:
             return None
-        current = self.storage[i]
+        current = self.storage[hash_key]
         while current:
             if current.key == key:
                 return current.value
