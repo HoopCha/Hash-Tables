@@ -54,25 +54,30 @@ class HashTable:
 
         Fill this in.
         '''
+        #Create the hashed key
         hash_key = self._hash_mod(key)
+        #Create a node with the key and value
         node = LinkedPair(key,value)
+        #Create the current bucket using the hash_key
         current = self.storage[hash_key]
 
-        if not self.storage[hash_key]:
-            self.storage[hash_key] = node
-            return
-
-        while current.next:
+        #If the list is not empty
+        while current:
+            #If buckets key is equal to the key
             if current.key == key:
+                #Update the value to the new value
                 current.value = value
                 return
-            current = current.next
-
-        if current.key == key:
-                current.value = value
+            #Else if the next item in the bucket is none
+            elif current.next == None:
+                #Set that next item in the bucket to the node
+                current.next = node
                 return
-                
-        current.next = node
+            #Otherwise cycle to the next item in the bucket amd start again
+            else:
+                current = current.next
+        #Otherwise put the node into the list 
+        self.storage[hash_key] = node
 
 
 
@@ -88,7 +93,7 @@ class HashTable:
         hash_key = self._hash_mod(key)
         if not self.storage[hash_key]:
             return "The key is not found here!"
-        current = self.storage[hash_keyi]
+        current = self.storage[hash_key]
         last = self.storage[hash_key]
         while current:
             if current.key == key:
@@ -127,9 +132,18 @@ class HashTable:
 
         Fill this in.
         '''
-        pass
+        old_storage = self.storage
+        self.capacity *= 2
+        self.storage = [None] * self.capacity
+
+        for node in old_storage:
+            while node:
+                self.insert(node.key, node.value)
+                node = node.next
 
 
+
+testarr =
 
 if __name__ == "__main__":
     ht = HashTable(2)
